@@ -2,18 +2,14 @@
 
 var path = require('path')
 
-module.exports = function (neutrino) {
+module.exports = function (neutrino, options) {
 	var config = neutrino.config
-	var NODE_MODULES = path.join(process.cwd(), 'node_modules')
+	var NODE_MODULES = path.join(__dirname, 'node_modules')
+	var svelteRule = config.module.rule('svelte')
 
-	config.module.rule('html')
-		.uses.clear()
-
-	config.module.rule('svelte')
+	svelteRule
 		.test(/\.(html|htm|svelte)$/)
 		.include
-			.add(neutrino.options.source)
-			.add(neutrino.options.tests)
 			.end()
 		.exclude
 			.add(NODE_MODULES)
@@ -23,6 +19,16 @@ module.exports = function (neutrino) {
 			.options({})
 			.end()
 
+	if (options.include) {
+		svelteRule.include.merge(options.include)
+	}
+
+	if (options.exclude) {
+		svelteRule.exclude.merge(options.exclude)
+	}
+
 	config.resolve.extensions.add('.html')
+	config.resolve.extensions.add('.htm')
 	config.resolve.extensions.add('.svelte')
+	config.resolveLoader.modules.add(NODE_MODULES)
 }

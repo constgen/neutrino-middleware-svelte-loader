@@ -1,8 +1,8 @@
 # Neutrino Svelte loader middleware
 
-[![npm version](https://badge.fury.io/js/neutrino-middleware-svelte-loader.svg)](https://badge.fury.io/js/neutrino-middleware-svelte-loader)
+[![NPM version][npm-image]][npm-url] [![NPM downloads][npm-downloads]][npm-url]
 
-`neutrino-middleware-svelte-loader` is a Neutrino middleware for compiling HTML components with Svelte.
+`neutrino-middleware-svelte-loader` is a Neutrino middleware for compiling HTML components with Svelte. It is compatible with **.html**, **.htm** and **.svelte** files.
 
 ## Requirements
 

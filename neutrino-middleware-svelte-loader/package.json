@@ -1,14 +1,21 @@
 {
 	"name": "neutrino-middleware-svelte-loader",
-	"version": "0.1.0",
-	"description": "neutrino middlware",
+	"version": "1.0.0",
+	"description": "Neutrino Svelte loader middleware",
 	"main": "index.js",
 	"author": "Constantine Genchevsky <const.gen@gmail.com>",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/constgen/neutrino-middlewares.git" 
 	},
-	"license": "MIT",
+	"keywords": [
+		"neutrino",
+		"neutrino-preset",
+		"neutrino-middlware",
+		"webpack",
+		"svelte"
+	],
 	"dependencies": {
 		"svelte-loader": "~2.0.0"
 	},
