@@ -12,6 +12,9 @@
 	"dependencies": {
 		"svelte-loader": "~2.0.0"
 	},
+	"devDependencies": {
+		"svelte": "^1.0.7"
+	},
 	"peerDependencies": {
 		"neutrino": "^5.0.0"
 	}
