@@ -1,31 +1,25 @@
 'use strict'
 
-var path = require('path')
+let path = require('path')
 
 module.exports = function (neutrino, options) {
-	var config = neutrino.config
-	var NODE_MODULES = path.join(__dirname, 'node_modules')
-	var svelteRule = config.module.rule('svelte')
+	let config = neutrino.config
+	let NODE_MODULES = path.join(__dirname, 'node_modules')
 
-	svelteRule
-		.test(/\.(html|htm|svelte)$/)
+	options = options || {}
+	config.module.rule('svelte')
+		.test(/\.(html?|svelte)$/)
 		.include
+			.merge(options.include || [])
 			.end()
 		.exclude
 			.add(NODE_MODULES)
+			.merge(options.exclude || [])
 			.end()
 		.use('svelte')
 			.loader(require.resolve('svelte-loader'))
 			.options({})
 			.end()
-
-	if (options.include) {
-		svelteRule.include.merge(options.include)
-	}
-
-	if (options.exclude) {
-		svelteRule.exclude.merge(options.exclude)
-	}
 
 	config.resolve.extensions.add('.html')
 	config.resolve.extensions.add('.htm')
