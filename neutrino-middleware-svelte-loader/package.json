@@ -1,6 +1,6 @@
 {
 	"name": "neutrino-middleware-svelte-loader",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Neutrino Svelte loader middleware",
 	"main": "index.js",
 	"author": "Constantine Genchevsky <const.gen@gmail.com>",
@@ -25,5 +25,14 @@
 	},
 	"peerDependencies": {
 		"neutrino": "^5.0.0"
+	},
+	"files": [
+		"*.js",
+		"README.md",
+		"package.json"
+	],
+	"engines": {
+		"node": ">=6.9.0",
+		"npm": ">=3.0.0"
 	}
 }

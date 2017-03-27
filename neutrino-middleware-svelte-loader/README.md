@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/neutrino-middleware-svelte-loader.svg)](https://www.npmjs.com/package/neutrino-middleware-svelte-loader)
 [![npm](https://img.shields.io/npm/dt/neutrino-middleware-svelte-loader.svg)](https://www.npmjs.com/package/neutrino-middleware-svelte-loader)
 
-`neutrino-middleware-svelte-loader` is a Neutrino middleware for compiling HTML components with [Svelte](https://svelte.technology). It is compatible with **.html**, **.htm** and **.svelte** files.
+`neutrino-middleware-svelte-loader` is a [Neutrino](https://neutrino.js.org) middleware for compiling HTML components with [Svelte](https://svelte.technology). It is compatible with **.html**, **.htm** and **.svelte** files.
 
 ## Requirements
 
@@ -34,10 +34,13 @@ neutrino.use(svelteLoader, {
 * `include` - optional array of paths to include in the compilation. Maps to Webpack's Rule.include
 * `exclude` - optional array of paths to exclude from the compilation. Maps to Webpack's Rule.include
 
+It is recommended to call this middlware after `neutrino.config.module.rule('compile')` initialization to avoid unexpected overriding. More imformation about usage of Neutrino middlwares can be found in the [documentation](https://neutrino.js.org/middleware).
+
 ## Rules
 
 This is a list of rules that are used by `neutrino-middleware-svelte-loader`:
 
 * `svelte`: Compiles Svelte components to JavaScript modules. Contains a single loader named the same `svelte`.
+* `compile`: Only necessary file extension added.
 
 
