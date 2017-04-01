@@ -1,14 +1,14 @@
 'use strict'
 
 let path = require('path')
+let arrify = require('arrify')
 
 module.exports = function (neutrino, options) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
 	const LOADER_EXTENSIONS = /\.(html?|svelte|svlt)$/
 	let config = neutrino.config
 	let compileRule = config.module.rules.get('compile')
-	let compileRuleExtensions = compileRule && compileRule.get('test') || []
-	compileRuleExtensions = (compileRuleExtensions instanceof Array) ? compileRuleExtensions : [compileRuleExtensions]
+	let compileRuleExtensions = arrify(compileRule && compileRule.get('test'))
 	let commonRuleExtensions = compileRuleExtensions.concat(LOADER_EXTENSIONS)
 
 	options = options || {}
@@ -32,5 +32,6 @@ module.exports = function (neutrino, options) {
 	config.resolve.extensions.add('.html')
 	config.resolve.extensions.add('.htm')
 	config.resolve.extensions.add('.svelte')
+	config.resolve.extensions.add('.svlt')
 	config.resolveLoader.modules.add(NODE_MODULES)
 }

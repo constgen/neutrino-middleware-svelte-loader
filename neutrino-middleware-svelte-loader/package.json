@@ -1,6 +1,6 @@
 {
 	"name": "neutrino-middleware-svelte-loader",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Neutrino Svelte loader middleware",
 	"main": "index.js",
 	"author": "Constantine Genchevsky <const.gen@gmail.com>",
@@ -18,6 +18,7 @@
 		"svelte"
 	],
 	"dependencies": {
+		"arrify": "~1.0.1",
 		"svelte-loader": "~2.0.0"
 	},
 	"devDependencies": {
