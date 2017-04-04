@@ -16,6 +16,11 @@ module.exports = function (neutrino, options = {}) {
 	let compileLoaderExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
 	let lintLoaderExtensions = arrify(lintRule && lintRule.get('test')).concat(LOADER_EXTENSIONS)
 
+	// default values
+	if (!options.include && !options.exclude) {
+		options.include = [neutrino.options.source, neutrino.options.tests]
+	}
+
 	compileRule
 		.test(compileLoaderExtensions)
 
