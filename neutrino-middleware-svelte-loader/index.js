@@ -45,6 +45,16 @@ module.exports = function (neutrino, options = {}) {
 				css: true
 			})
 			.end()
+		.use('extract-html')
+			.loader(require.resolve('extract-loader'))
+			.end()
+		.use('html')
+			.loader(require.resolve('html-loader'))
+			.options({
+				attrs: ["img:src", "script:src", "link:href", "source:src", "source:srcset"],
+				minimize: false
+			})
+			.end()
 	
 	config
 		.resolve.extensions
