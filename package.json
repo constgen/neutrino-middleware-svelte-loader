@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/constgen/neutrino-middlewares.git" 
+		"url": "https://github.com/constgen/neutrino-middleware-svelte-loader.git" 
 	},
 	"homepage": "https://github.com/constgen/neutrino-middlewares/tree/master/neutrino-middleware-svelte-loader",
 	"keywords": [
