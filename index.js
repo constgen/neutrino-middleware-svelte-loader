@@ -75,7 +75,7 @@ module.exports = function (neutrino, options = {}) {
 			.tap(options => merge(options, {
 				plugins: ['html'],
 				settings: {
-					'html/html-extensions': ['.svelte', '.svlt', '.html', '.htm']
+					'html/html-extensions': ['.html', '.htm', '.svelte', '.svlt']
 				}
 			}))
 			.end()
@@ -85,9 +85,10 @@ module.exports = function (neutrino, options = {}) {
 		stylelintPlugin
 			.tap(args => [
 				merge(args[0], {
-					files: ['**/*.(html?|svelte|svlt)'],
+					files: ['**/*.+(html|htm|svelte|svlt)'],
 					config: {
-						processors: [require.resolve('stylelint-processor-html')]						
+						processors: [require.resolve('stylelint-processor-html')],
+						rules: {'no-empty-source': null}					
 					}
 				})
 			])
