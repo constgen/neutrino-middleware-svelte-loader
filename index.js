@@ -2,7 +2,7 @@
 
 let path = require('path')
 let arrify = require('arrify')
-let merge = require('merge')
+let merge = require('deepmerge')
 
 module.exports = function (neutrino, options = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
