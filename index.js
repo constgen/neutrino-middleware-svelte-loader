@@ -13,8 +13,8 @@ module.exports = function (neutrino, options = {}) {
 	let lintRule = config.module.rules.get('lint')
 	let eslintLoader = lintRule && lintRule.uses.get('eslint')
 	let stylelintPlugin = config.plugins.get('stylelint')
-	let compileLoaderExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
-	let lintLoaderExtensions = arrify(lintRule && lintRule.get('test')).concat(LOADER_EXTENSIONS)
+	let compileExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
+	let lintExtensions = arrify(lintRule && lintRule.get('test')).concat(LOADER_EXTENSIONS)
 
 	// default values
 	if (!options.include && !options.exclude) {
@@ -22,7 +22,7 @@ module.exports = function (neutrino, options = {}) {
 	}
 
 	compileRule
-		.test(compileLoaderExtensions)
+		.test(compileExtensions)
 
 	svelteRule
 		.test(LOADER_EXTENSIONS)
@@ -70,7 +70,7 @@ module.exports = function (neutrino, options = {}) {
 	if (eslintLoader) {
 		lintRule
 			.pre()
-			.test(lintLoaderExtensions)
+			.test(lintExtensions)
 		eslintLoader
 			.tap(options => merge(options, {
 				plugins: ['html'],
