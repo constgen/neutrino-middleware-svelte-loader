@@ -8,8 +8,8 @@ module.exports = function (neutrino, options = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
 	const LOADER_EXTENSIONS = /\.(html?|svelte|svlt)$/
 	let config = neutrino.config
-	let svelteRule = config.module.rule('svelte')
 	let compileRule = config.module.rule('compile')
+	let svelteRule = config.module.rule('svelte')
 	let lintRule = config.module.rules.get('lint')
 	let eslintLoader = lintRule && lintRule.uses.get('eslint')
 	let stylelintPlugin = config.plugins.get('stylelint')
