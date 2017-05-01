@@ -7,8 +7,11 @@ let merge = require('deepmerge')
 module.exports = function (neutrino, options = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
 	const LOADER_EXTENSIONS = /\.(html?|svelte|svlt)$/
+	const LOADER_HTML_EXTENSIONS = /\.(html?)$/
+	const LOADER_SVELTE_EXTENSIONS = /\.(svelte|svlt)$/
 	let config = neutrino.config
 	let compileRule = config.module.rule('compile')
+	let htmlRule = config.module.rule('html')
 	let svelteRule = config.module.rule('svelte')
 	let lintRule = config.module.rules.get('lint')
 	let eslintLoader = lintRule && lintRule.uses.get('eslint')
@@ -24,8 +27,13 @@ module.exports = function (neutrino, options = {}) {
 	compileRule
 		.test(compileExtensions)
 
+	htmlRule
+		.test(LOADER_HTML_EXTENSIONS)
+
 	svelteRule
-		.test(LOADER_EXTENSIONS)
+		.test(LOADER_SVELTE_EXTENSIONS);
+
+	[htmlRule, svelteRule].forEach(rule => rule
 		.include
 			.merge(options.include || [])
 			.end()
@@ -55,7 +63,8 @@ module.exports = function (neutrino, options = {}) {
 				minimize: false
 			})
 			.end()
-	
+	)
+		
 	config
 		.resolve.extensions
 			.add('.html')
