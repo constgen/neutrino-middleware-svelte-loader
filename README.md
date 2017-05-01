@@ -41,6 +41,7 @@ It is recommended to call this middlware after `neutrino.config.module.rule('com
 This is a list of rules that are used by `neutrino-middleware-svelte-loader`:
 
 * `svelte`: Compiles Svelte components to JavaScript modules. Contains a single loader named the same `svelte`.
+* `html`: Compiles Svelte components to JavaScript modules. Contains a single loader named `svelte`. Override this if you want a different loader for HTML files.
 * `compile`: Only necessary file extension added.
 
 
