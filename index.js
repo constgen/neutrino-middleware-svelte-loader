@@ -2,7 +2,6 @@
 
 let path = require('path')
 let arrify = require('arrify')
-let merge = require('deepmerge')
 
 module.exports = function (neutrino, options = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
@@ -13,11 +12,8 @@ module.exports = function (neutrino, options = {}) {
 	let compileRule = config.module.rule('compile')
 	let htmlRule = config.module.rule('html')
 	let svelteRule = config.module.rule('svelte')
-	let lintRule = config.module.rules.get('lint')
-	let eslintLoader = lintRule && lintRule.uses.get('eslint')
-	let stylelintPlugin = config.plugins.get('stylelint')
 	let compileExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
-	let lintExtensions = arrify(lintRule && lintRule.get('test')).concat(LOADER_EXTENSIONS)
+	
 
 	// default values
 	if (!options.include && !options.exclude) {
@@ -67,39 +63,9 @@ module.exports = function (neutrino, options = {}) {
 		
 	config
 		.resolve.extensions
-			.add('.html')
-			.add('.htm')
-			.add('.svelte')
-			.add('.svlt')
+			.merge(['.html', '.htm', '.svelte', '.svlt'])
 			.end().end()
 		.resolveLoader.modules
 			.add(NODE_MODULES)
 			.end().end()
-
-	if (eslintLoader) {
-		lintRule
-			.pre()
-			.test(lintExtensions)
-		eslintLoader
-			.tap(options => merge(options, {
-				plugins: ['html'],
-				settings: {
-					'html/html-extensions': ['.html', '.htm', '.svelte', '.svlt']
-				}
-			}))
-			.end()
-	}
-
-	if (stylelintPlugin) {
-		stylelintPlugin
-			.tap(args => [
-				merge(args[0], {
-					files: ['**/*.+(html|htm|svelte|svlt)'],
-					config: {
-						processors: [require.resolve('stylelint-processor-html')],
-						rules: {'no-empty-source': null}					
-					}
-				})
-			])
-	}
 }
