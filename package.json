@@ -1,6 +1,6 @@
 {
 	"name": "neutrino-middleware-svelte-loader",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"description": "Neutrino Svelte loader middleware",
 	"main": "index.js",
 	"author": "Constantine Genchevsky <const.gen@gmail.com>",
@@ -12,8 +12,8 @@
 	"homepage": "https://github.com/constgen/neutrino-middleware-svelte-loader",
 	"keywords": [
 		"neutrino",
-		"neutrino-preset",
 		"neutrino-middlware",
+		"neutrino middlware",
 		"webpack",
 		"svelte"
 	],

@@ -2,6 +2,7 @@
 
 let path = require('path')
 let arrify = require('arrify')
+let merge = require('deepmerge')
 
 module.exports = function (neutrino, options = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
@@ -39,25 +40,27 @@ module.exports = function (neutrino, options = {}) {
 			.end()
 		.use('svelte')
 			.loader(require.resolve('svelte-loader'))
-			.options({
+			.tap((opts = {}) => merge({
 				format: 'es',
 				generate: 'dom', //ssr
 				name: 'SvelteComponent',
 				// filename: 'SvelteComponent.html',
 				// shared: true,
+				// sourcemap disabling is not implemented in Svelte Compiler
 				dev: true,
 				css: true
-			})
+			}, opts))
+			.tap((opts = {}) => merge(opts, options))
 			.end()
 		.use('extract-html')
 			.loader(require.resolve('extract-loader'))
 			.end()
 		.use('html')
 			.loader(require.resolve('html-loader'))
-			.options({
+			.tap((opts = {}) => merge({
 				attrs: ['img:src', 'script:src', 'link:href', 'source:src', 'source:srcset'],
 				minimize: false
-			})
+			}, opts))
 			.end()
 	)
 		
