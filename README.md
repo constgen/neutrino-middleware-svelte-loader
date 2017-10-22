@@ -8,7 +8,7 @@
 ## Requirements
 
 * Node.js v6.9+
-* Neutrino v5 and v6
+* Neutrino v5+
 
 ## Installation
 
@@ -31,10 +31,10 @@ neutrino.use(svelteLoader, {
 })
 ```
 
-* `include`: optional array of paths to include in the compilation. Maps to Webpack's Rule.include
-* `exclude`: optional array of paths to exclude from the compilation. Maps to Webpack's Rule.include
+* `include`: optional array of paths to include in the compilation. Maps to Webpack's rule.include.
+* `exclude`: optional array of paths to exclude from the compilation. Maps to Webpack's rule.include.
 
-It is recommended to call this middlware after the `neutrino.config.module.rule('compile')` initialization to avoid unexpected overriding. More imformation about usage of Neutrino middlwares can be found in the [documentation](https://neutrino.js.org/middleware).
+It is recommended to call this middleware after the `neutrino.config.module.rule('compile')` initialization to avoid unexpected overriding. More information about usage of Neutrino middlewares can be found in the [documentation](https://neutrino.js.org/middleware).
 
 ## Rules
 
@@ -42,6 +42,6 @@ This is a list of rules that are used by `neutrino-middleware-svelte-loader`:
 
 * `svelte`: Compiles Svelte components to JavaScript modules. Contains a single loader named the same `svelte`.
 * `html`: Compiles Svelte components to JavaScript modules. Contains a single loader named `svelte`. Override this if you want a different loader for HTML files.
-* `compile`: Only necessary file extension added.
+* `compile`: Only necessary file extensions added.
 
 

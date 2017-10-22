@@ -1,6 +1,6 @@
 {
 	"name": "neutrino-middleware-svelte-loader",
-	"version": "3.1.0",
+	"version": "4.0.0",
 	"description": "Neutrino Svelte loader middleware",
 	"main": "index.js",
 	"author": "Constantine Genchevsky <const.gen@gmail.com>",
@@ -18,22 +18,23 @@
 		"svelte"
 	],
 	"dependencies": {
-		"deepmerge": "~1.5.0",
+		"deepmerge": "~2.0.0",
 		"arrify": "~1.0.1",
-		"svelte-loader": "~2.0.1",
-		"extract-loader": "~0.1.0",
-		"html-loader": "~0.4.5"
+		"svelte-loader": "~2.1.0",
+		"extract-loader": "~1.0.1",
+		"html-loader": "~0.5.1"
 	},
 	"devDependencies": {
 		"svelte": "^1.0.7",
 		"eslint": "~3.19.0"
 	},
 	"peerDependencies": {
-		"neutrino": "^5.0.0 || ^6.0.0"
+		"neutrino": "^5.0.0 || ^6.0.0 || ^7.0.0"
 	},
 	"files": [
 		"*.js",
 		"README.md",
+		"LICENSE",
 		"package.json"
 	],
 	"engines": {
