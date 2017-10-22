@@ -2,7 +2,18 @@
 
 let path = require('path')
 let arrify = require('arrify')
-let merge = require('deepmerge')
+let deepmerge = require('deepmerge')
+
+function merge(options = {}){
+	return function(opts = {}){
+		return deepmerge(opts, options)
+	}
+}
+function premerge(options = {}){
+	return function(opts = {}){
+		return deepmerge(options, opts)
+	}
+}
 
 module.exports = function (neutrino, options = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
@@ -15,7 +26,6 @@ module.exports = function (neutrino, options = {}) {
 	let svelteRule = config.module.rule('svelte')
 	let compileExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
 	
-
 	// default values
 	if (!options.include && !options.exclude) {
 		options.include = [neutrino.options.source, neutrino.options.tests]
@@ -40,27 +50,27 @@ module.exports = function (neutrino, options = {}) {
 			.end()
 		.use('svelte')
 			.loader(require.resolve('svelte-loader'))
-			.tap((opts = {}) => merge({
+			.tap(premerge({
 				format: 'es',
 				generate: 'dom', //ssr
 				name: 'SvelteComponent',
 				// filename: 'SvelteComponent.html',
 				// shared: true,
 				// sourcemap disabling is not implemented in Svelte Compiler
-				dev: true,
+				dev: (process.env.NODE_ENV === 'development'),
 				css: true
-			}, opts))
-			.tap((opts = {}) => merge(opts, options))
+			}))
+			.tap(merge(options))
 			.end()
 		.use('extract-html')
 			.loader(require.resolve('extract-loader'))
 			.end()
 		.use('html')
 			.loader(require.resolve('html-loader'))
-			.tap((opts = {}) => merge({
-				attrs: ['img:src', 'script:src', 'link:href', 'source:src', 'source:srcset'],
+			.tap(premerge({
+				attrs: [':url', 'img:src', 'script:src', 'link:href', 'source:src', 'source:srcset'],
 				minimize: false
-			}, opts))
+			}))
 			.end()
 	)
 		
