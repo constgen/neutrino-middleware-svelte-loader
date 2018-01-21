@@ -4,12 +4,12 @@ let path = require('path')
 let arrify = require('arrify')
 let deepmerge = require('deepmerge')
 
-function merge(options = {}){
+function mergeWith(options = {}){
 	return function(opts = {}){
 		return deepmerge(opts, options)
 	}
 }
-function premerge(options = {}){
+function mergeTo(options = {}){
 	return function(opts = {}){
 		return deepmerge(options, opts)
 	}
@@ -50,24 +50,30 @@ module.exports = function (neutrino, options = {}) {
 			.end()
 		.use('svelte')
 			.loader(require.resolve('svelte-loader'))
-			.tap(premerge({
+			.tap(mergeTo({
 				format: 'es',
-				generate: 'dom', //ssr
+				generate: 'dom', //or 'ssr'
 				name: 'SvelteComponent',
 				// filename: 'SvelteComponent.html',
 				// shared: true,
 				// sourcemap disabling is not implemented in Svelte Compiler
 				dev: (process.env.NODE_ENV === 'development'),
 				css: true
+				// emitCss: false
+				// preprocess: {
+				// 	markup
+				// 	style
+				// 	script
+				// }
 			}))
-			.tap(merge(options))
+			.tap(mergeWith(options))
 			.end()
 		.use('extract-html')
 			.loader(require.resolve('extract-loader'))
 			.end()
 		.use('html')
 			.loader(require.resolve('html-loader'))
-			.tap(premerge({
+			.tap(mergeTo({
 				attrs: [':url', 'img:src', 'script:src', 'link:href', 'source:src', 'source:srcset'],
 				minimize: false
 			}))
