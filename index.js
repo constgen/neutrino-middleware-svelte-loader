@@ -15,20 +15,25 @@ function mergeTo(options = {}){
 	}
 }
 
-module.exports = function (neutrino, options = {}) {
+module.exports = function (neutrino, settings = {}) {
 	const NODE_MODULES = path.join(__dirname, 'node_modules')
-	const LOADER_EXTENSIONS = /\.(html?|svelte|svlt)$/
+	const LOADER_EXTENSIONS = /\.(html?|svelte)$/
 	const LOADER_HTML_EXTENSIONS = /\.(html?)$/
-	const LOADER_SVELTE_EXTENSIONS = /\.(svelte|svlt)$/
+	const LOADER_SVELTE_EXTENSIONS = /\.(svelte)$/
+	let devMode = (process.env.NODE_ENV === 'development')
 	let config = neutrino.config
 	let compileRule = config.module.rule('compile')
 	let htmlRule = config.module.rule('html')
 	let svelteRule = config.module.rule('svelte')
 	let compileExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
-	
+
 	// default values
-	if (!options.include && !options.exclude) {
-		options.include = [neutrino.options.source, neutrino.options.tests]
+	if (!settings.include && !settings.exclude) {
+		settings.include = [neutrino.options.source, neutrino.options.tests]
+	}
+
+	if (!settings.svelte) {
+		settings.svelte = {}
 	}
 
 	compileRule
@@ -42,31 +47,28 @@ module.exports = function (neutrino, options = {}) {
 
 	[htmlRule, svelteRule].forEach(rule => rule
 		.include
-			.merge(options.include || [])
+			.merge(settings.include || [])
 			.end()
 		.exclude
 			.add(NODE_MODULES)
-			.merge(options.exclude || [])
+			.merge(settings.exclude || [])
 			.end()
 		.use('svelte')
 			.loader(require.resolve('svelte-loader'))
 			.tap(mergeTo({
-				format: 'es',
-				generate: 'dom', //or 'ssr'
-				name: 'SvelteComponent',
-				// filename: 'SvelteComponent.html',
-				// shared: true,
-				// sourcemap disabling is not implemented in Svelte Compiler
-				dev: (process.env.NODE_ENV === 'development'),
-				css: true
-				// emitCss: false
+				// hotReload: true,
+				// emitCss: false,
+				// format: 'es',
+				// generate: 'dom', //or 'ssr'
+				dev: devMode
+				// css: true
 				// preprocess: {
 				// 	markup
 				// 	style
 				// 	script
 				// }
 			}))
-			.tap(mergeWith(options))
+			.tap(mergeWith(settings.svelte))
 			.end()
 		.use('extract-html')
 			.loader(require.resolve('extract-loader'))
@@ -79,10 +81,13 @@ module.exports = function (neutrino, options = {}) {
 			}))
 			.end()
 	)
-		
+
 	config
 		.resolve.extensions
-			.merge(['.html', '.htm', '.svelte', '.svlt'])
+			.merge(['.html', '.htm', '.svelte'])
+			.end().end()
+		.resolve.mainFields
+			.merge(['svelte', 'browser', 'module', 'main'])
 			.end().end()
 		.resolveLoader.modules
 			.add(NODE_MODULES)
