@@ -28,14 +28,16 @@ const svelteLoader = require('neutrino-middleware-svelte-loader')
 
 neutrino.use(svelteLoader, {
   include: [],
-  exclude: []
+  exclude: [],
+  svelte: { emitCss: true }
 })
 ```
 
 * `include`: optional array of paths to include in the compilation. Maps to Webpack's rule.include.
 * `exclude`: optional array of paths to exclude from the compilation. Maps to Webpack's rule.include.
+* `svelte`: optional object to pass to [`svelte-loader`](https://github.com/sveltejs/svelte-loader) options.
 
-It is recommended to call this middleware after the `neutrino.config.module.rule('compile')` initialization to avoid unexpected overriding. More information about usage of Neutrino middlewares can be found in the [documentation](https://neutrino.js.org/middleware).
+It is recommended to call this middleware after the `neutrino.config.module.rule('compile')` initialization to avoid unexpected overriding and to support transpilation of Svelte components. More information about usage of Neutrino middlewares can be found in the [documentation](https://neutrino.js.org/middleware).
 
 ## Rules
 
