@@ -26,6 +26,13 @@ module.exports = function (neutrino, settings = {}) {
 	let htmlRule = config.module.rule('html')
 	let svelteRule = config.module.rule('svelte')
 	let compileExtensions = arrify(compileRule.get('test')).concat(LOADER_EXTENSIONS)
+	let neutrinoExtensions = neutrino.options.extensions
+
+	function isNotInExtensions (extension) {
+		return neutrinoExtensions.indexOf(extension) < 0
+	}
+
+	neutrino.options.extensions = neutrinoExtensions.concat(['html', 'htm', 'svelte'].filter(isNotInExtensions))
 
 	// default values
 	if (!settings.include && !settings.exclude) {
